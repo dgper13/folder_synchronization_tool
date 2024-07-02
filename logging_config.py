@@ -1,9 +1,10 @@
 import logging
+from typing import Optional
 
 # Initialize logger with no handlers
 logger = logging.getLogger()
 
-def setup_logging(log_file='file.log'):
+def setup_logging(log_file: Optional[str] = 'file.log') -> None:
     """
     Configures logging for the application with both console and file handlers.
 

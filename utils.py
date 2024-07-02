@@ -1,12 +1,13 @@
 import hashlib
 from pathlib import Path
 import logging
+from typing import List, Union
 
 
 logger = logging.getLogger(__name__)
 
 
-def calculate_checksum(file_path):
+def calculate_checksum(file_path: Path) -> str:
     """
     Calculates the MD5 checksum of a file located at the specified path.
 
@@ -39,7 +40,7 @@ def calculate_checksum(file_path):
 
 
 
-def create_folder(path):
+def create_folder(path: Path) -> None:
     """
     Create a folder at the specified path if it does not already exist.
 
@@ -66,7 +67,7 @@ def create_folder(path):
 
 
 
-def replicate_file(source_item, replica_item):
+def replicate_file(source_item: Path, replica_item: Path) -> None:
     """
     Replicates a file from the source path to the replica path if they differ in checksums,
     ensuring synchronization. If the replica file doesn't exist, it copies it from the source.
@@ -91,7 +92,7 @@ def replicate_file(source_item, replica_item):
 
 
 
-def copy_or_replace_file(src_file, dest_file, replace=False, chunk_size=1024*1024):
+def copy_or_replace_file(src_file: Path, dest_file: Path, replace: bool = False, chunk_size: int = 1024*1024) -> None:
     """
     Copies a file from a source path to a destination path. Optionally replaces the destination file.
 
@@ -129,7 +130,7 @@ def copy_or_replace_file(src_file, dest_file, replace=False, chunk_size=1024*102
 
 
 
-def delete_path(path):
+def delete_path(path: Path) -> None:
     """
     Recursively deletes a file or folder and all its contents.
 
@@ -171,7 +172,7 @@ def delete_path(path):
 
 
 
-def chunk_list(seq, size):
+def chunk_list(seq: Union[list, tuple], size: int) -> List[List]:
     """
     Divides a sequence into chunks of a specified size.
 
@@ -187,7 +188,7 @@ def chunk_list(seq, size):
 
 
 
-def get_items_chunks(source_path, number_of_threads):
+def get_items_chunks(source_path: Path, number_of_threads: int) -> List[List[str]]:
     """
     Retrieves and divides relative paths of items in a folder into chunks for concurrent processing.
 

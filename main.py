@@ -3,6 +3,7 @@ import time
 from pathlib import Path
 from threading import Thread, Lock
 from multiprocessing import cpu_count
+from typing import List, Tuple
 
 from utils import create_folder, delete_path, get_items_chunks, replicate_file
 
@@ -10,10 +11,10 @@ from logging_config import logger, setup_logging
 
 
 # Create a lock to synchronize access to shared resources across threads
-lock = Lock()
+lock: Lock = Lock()
 
 
-def synchronize_folders(item_list, source_path, replica_path):
+def synchronize_folders(item_list: List[str], source_path: Path, replica_path: Path) -> None:
     """
     Synchronizes files and folders from a source directory to a replica directory.
 
@@ -38,7 +39,7 @@ def synchronize_folders(item_list, source_path, replica_path):
 
 
 
-def clean_up_replica(item_list, source_path, replica_path):
+def clean_up_replica(item_list: List[str], source_path: Path, replica_path: Path) -> None:
     """
     Cleans up the replica directory by deleting items that no longer exist in the source directory.
 
@@ -59,7 +60,8 @@ def clean_up_replica(item_list, source_path, replica_path):
 
 
 
-def process_without_threads(source_items, replica_items, source_path, replica_path):
+def process_without_threads(source_items: List[str], replica_items: List[str], 
+                            source_path: Path, replica_path: Path) -> None:
     """
     Synchronize folders and clean up replica items without using threads.
 
@@ -72,11 +74,13 @@ def process_without_threads(source_items, replica_items, source_path, replica_pa
     Returns:
         None
     """
+
     synchronize_folders(source_items, source_path, replica_path)
     clean_up_replica(replica_items, source_path, replica_path)
 
 
-def process_with_threads(source_items, replica_items, source_path, replica_path):
+def process_with_threads(source_items: List[List[str]], replica_items: List[List[str]], 
+                         source_path: Path, replica_path: Path) -> None:
     """
     Synchronize folders and clean up replica items using multiple threads.
 
@@ -126,7 +130,7 @@ def process_with_threads(source_items, replica_items, source_path, replica_path)
 
 
 
-def process_syncronization(source_folder, replica_folder):
+def process_syncronization(source_folder: str, replica_folder: str) -> None:
     """
     Synchronize the source folder with the replica folder using multiple threads if available.
 
@@ -159,7 +163,7 @@ def process_syncronization(source_folder, replica_folder):
 
 
 
-def parse_arguments():
+def parse_arguments() -> Tuple[str, str, int, str]:
     """
     Parses command-line arguments for source folder, replica folder, synchronization interval, and log file.
 
@@ -185,7 +189,7 @@ def parse_arguments():
 
 
 
-def main():
+def main() -> None:
     """
     Entry point of the synchronization script.
 
