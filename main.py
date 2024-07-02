@@ -159,7 +159,7 @@ def process_syncronization(source_folder: str, replica_folder: str) -> None:
     if number_of_threads > 1:
         process_with_threads(source_items, replica_items, source_path, replica_path)
     else:
-        process_without_threads(source_items, replica_items, source_path, replica_path)
+        process_without_threads(source_items[0], replica_items[0], source_path, replica_path)
 
 
 
