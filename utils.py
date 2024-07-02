@@ -204,7 +204,7 @@ def get_items_chunks(source_path: Path, number_of_threads: int) -> List[List[str
     source_relative_paths = [item.relative_to(source_path).as_posix() for item in source_contents]
 
     if number_of_threads == 1:
-        return [source_relative_paths]
+        return source_relative_paths
     else:
         return chunk_list(source_relative_paths, number_of_threads)
     
